@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Quote Gen</string>
+    <string name="generate_another_quote">Generate Another Quote</string>
+    <string name="click_to_go_to_fav">Click Here to View Favorite Quotes</string>
+</resources>

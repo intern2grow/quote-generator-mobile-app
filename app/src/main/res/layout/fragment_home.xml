@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".presentation.home.HomeFragment">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="viewModel"
+            type="dev.awd.quotegen.presentation.home.HomeViewModel" />
+
+        <variable
+            name="onGetNewQuote"
+            type="dev.awd.quotegen.presentation.home.HomeIntent.GetRandomQuote" />
+
+        <variable
+            name="onAddToFavorites"
+            type="dev.awd.quotegen.presentation.home.HomeIntent.AddToFavorites" />
+
+        <variable
+            name="onRemoveFromFavorites"
+            type="dev.awd.quotegen.presentation.home.HomeIntent.RemoveFromFavorites" />
+
+        <variable
+            name="onNavToFavorites"
+            type="dev.awd.quotegen.presentation.home.HomeIntent.OnNavToFav" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/gradient_background">
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline_start"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.05" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline_end"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.95" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline_top"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.05" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline_bottom"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.95" />
+
+
+        <Button
+            android:id="@+id/nav_to_fav_btn"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="200dp"
+            android:backgroundTint="#cfbbf0"
+            android:text="@string/click_to_go_to_fav"
+            android:textColor="@color/black"
+            app:layout_constraintEnd_toEndOf="@id/guideline_end"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@id/guideline_start"
+            app:layout_constraintTop_toTopOf="@id/guideline_top" />
+
+        <Space
+            android:id="@+id/spacer"
+            android:layout_width="match_parent"
+            android:layout_height="8dp"
+            app:layout_constraintEnd_toEndOf="@id/guideline_end"
+            app:layout_constraintStart_toStartOf="@id/guideline_start"
+            app:layout_constraintTop_toBottomOf="@id/nav_to_fav_btn" />
+
+        <include
+            layout="@layout/quote_card"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="@id/guideline_end"
+            app:layout_constraintStart_toStartOf="@id/guideline_start"
+            app:layout_constraintTop_toBottomOf="@id/spacer"
+            app:onGetNewQuote="@{onGetNewQuote}"
+            app:viewModel="@{viewModel}" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
