@@ -20,6 +20,7 @@ class FavoritesViewModel(
 ) : ViewModel() {
 
 
+    private var quotes: List<QuoteModel> = emptyList()
     var favoritesState: MutableStateFlow<FavoritesState> = MutableStateFlow(FavoritesState())
         private set
     var favoritesEffect: MutableSharedFlow<FavoritesEffect> = MutableSharedFlow()
@@ -29,9 +30,24 @@ class FavoritesViewModel(
     fun setIntent(intent: FavoritesIntent) {
         when (intent) {
             is FavoritesIntent.GetFavoritesQuotes -> loadFavorites()
+            is FavoritesIntent.Search -> searchInFavorites(intent.keyword)
             is FavoritesIntent.RemoveFromFavorites -> removeQuote(intent.quote)
             is FavoritesIntent.OnNavToHome -> navToHome()
         }
+    }
+
+    private fun searchInFavorites(keyword: String) {
+        favoritesState.update { it.copy(loading = true) }
+        favoritesState.update {
+            it.copy(
+                quotes = if (keyword.isBlank()) quotes else {
+                    favoritesState.value.quotes.filter { quoteModel ->
+                        quoteModel.doesMatchSearchQuery(keyword)
+                    }
+                }
+            )
+        }
+        favoritesState.update { it.copy(loading = false) }
     }
 
     private fun navToHome() {
@@ -52,8 +68,9 @@ class FavoritesViewModel(
             getFavoriteQuotesUseCase().collectLatest { result ->
                 when (result) {
                     is Result.Success<*> -> {
+                        quotes = result.data as List<QuoteModel>
                         favoritesState.update {
-                            it.copy(quotes = result.data as List<QuoteModel>, loading = false)
+                            it.copy(quotes = quotes, loading = false)
                         }
                         Log.i(TAG, "loadFavorites: ${result.data}")
                     }

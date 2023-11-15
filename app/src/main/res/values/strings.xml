@@ -4,4 +4,5 @@
     <string name="click_to_go_to_fav">Click Here to View Favorite Quotes</string>
     <string name="remove_from_fav">Remove From Favorites</string>
     <string name="back_to_home_screen">Back to Home Screen</string>
+    <string name="type_something_here_to_search">Type Something here to search</string>
 </resources>

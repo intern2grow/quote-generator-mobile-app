@@ -1,6 +1,9 @@
 package dev.awd.quotegen.presentation.favorites
 
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,6 +12,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
+import com.google.android.material.textfield.TextInputLayout
 import dev.awd.quotegen.QuoteGenApp
 import dev.awd.quotegen.R
 import dev.awd.quotegen.databinding.FragmentFavoritesBinding
@@ -36,6 +40,20 @@ class FavoritesFragment : Fragment() {
         }
     }
 
+    private val textWatcher = object : TextWatcher {
+        override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+
+        override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+
+        override fun afterTextChanged(p0: Editable?) {
+            val query = p0.toString()
+            viewModel.setIntent(FavoritesIntent.Search(query))
+            lifecycleScope.launch { viewModel.favoritesState.collectLatest {
+                Log.d("TAG", "afterTextChanged: ${it.quotes}")
+            } }
+        }
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -52,6 +70,9 @@ class FavoritesFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         viewModel.setIntent(FavoritesIntent.GetFavoritesQuotes)
         listenToFavoritesEffect()
+        val searchField =
+            binding.searchField.findViewById(R.id.search_input_layout) as TextInputLayout
+        searchField.editText?.addTextChangedListener(textWatcher)
     }
 
     private fun listenToFavoritesEffect() {
