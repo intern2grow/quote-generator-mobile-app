@@ -1,9 +1,9 @@
 package dev.awd.quotegen.data.repository
 
+import dev.awd.quotegen.data.Result
 import dev.awd.quotegen.data.local.QuoteDao
 import dev.awd.quotegen.data.mappers.toQuoteEntity
 import dev.awd.quotegen.data.mappers.toQuoteModel
-import dev.awd.quotegen.data.Result
 import dev.awd.quotegen.data.remote.QuoteApi
 import dev.awd.quotegen.domain.models.QuoteModel
 import dev.awd.quotegen.domain.repository.QuotesRepository

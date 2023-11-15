@@ -5,6 +5,8 @@
 
     <data>
 
+        <import type="android.view.View" />
+
         <variable
             name="viewModel"
             type="dev.awd.quotegen.presentation.home.HomeViewModel" />
@@ -42,6 +44,19 @@
             app:layout_constraintVertical_bias="0.5"
             tools:text="All I required to be happy was friendship and people I could admire." />
 
+        <androidx.core.widget.ContentLoadingProgressBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:indeterminateTint="#6750a4"
+            android:padding="8dp"
+            android:visibility="@{viewModel.homeState.loading?View.VISIBLE:View.GONE}"
+            app:layout_constraintBottom_toTopOf="@+id/author_tv"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.5" />
+
         <TextView
             android:id="@+id/author_tv"
             android:layout_width="wrap_content"
@@ -72,6 +87,7 @@
             android:layout_marginStart="16dp"
             android:background="@drawable/stroke_bg"
             android:contentDescription="@string/app_name"
+            android:onClick="@{() -> viewModel.setIntent(onAddToFavorites)}"
             android:src="@drawable/favorite"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/generate_quote_btn" />

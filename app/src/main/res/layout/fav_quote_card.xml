@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="quote"
+            type="dev.awd.quotegen.domain.models.QuoteModel" />
+
+        <variable
+            name="onDelete"
+            type="dev.awd.quotegen.utils.CustomClickListener" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="8dp"
+        android:background="@color/white"
+        android:padding="16dp">
+
+
+        <TextView
+            android:id="@+id/quote_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:minLines="2"
+            android:padding="8dp"
+            android:text="@{quote.body}"
+            app:layout_constraintBottom_toTopOf="@+id/author_tv"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.5"
+            tools:text="All I required to be happy was friendship and people I could admire." />
+
+        <TextView
+            android:id="@+id/author_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="8dp"
+            android:text="@{quote.author}"
+            android:textColor="#B3323232"
+            android:textSize="22sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/quote_tv"
+            tools:text="Quote Author" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/remove_btn"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/white"
+            android:text="@string/remove_from_fav"
+            android:textAlignment="center"
+            android:textColor="#6750a4"
+            app:cornerRadius="4dp"
+            android:onClick="@{() -> onDelete.onClick(quote)}"
+            app:icon="@drawable/favorite_border"
+            app:iconGravity="start"
+            app:iconSize="36dp"
+            app:iconTint="#6750a4"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/author_tv" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

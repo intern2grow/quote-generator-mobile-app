@@ -1,30 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".presentation.home.HomeFragment">
+    tools:context=".presentation.favorites.FavoritesFragment"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
         <variable
+            name="adapter"
+            type="dev.awd.quotegen.presentation.favorites.FavoritesAdapter" />
+
+        <variable
             name="viewModel"
-            type="dev.awd.quotegen.presentation.home.HomeViewModel" />
+            type="dev.awd.quotegen.presentation.favorites.FavoritesViewModel" />
 
         <variable
-            name="onGetNewQuote"
-            type="dev.awd.quotegen.presentation.home.HomeIntent.GetRandomQuote" />
+            name="onGetFavorites"
+            type="dev.awd.quotegen.presentation.favorites.FavoritesIntent.GetFavoritesQuotes" />
 
-        <variable
-            name="onAddToFavorites"
-            type="dev.awd.quotegen.presentation.home.HomeIntent.AddToFavorites" />
 
         <variable
             name="onRemoveFromFavorites"
-            type="dev.awd.quotegen.presentation.home.HomeIntent.RemoveFromFavorites" />
+            type="dev.awd.quotegen.presentation.favorites.FavoritesIntent.RemoveFromFavorites" />
 
         <variable
-            name="onNavToFavorites"
-            type="dev.awd.quotegen.presentation.home.HomeIntent.OnNavToFav" />
+            name="onNavtoHome"
+            type="dev.awd.quotegen.presentation.favorites.FavoritesIntent.OnNavToHome" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -51,7 +52,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            app:layout_constraintGuide_percent="0.05" />
+            app:layout_constraintGuide_percent="0.02" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline_bottom"
@@ -60,40 +61,47 @@
             android:orientation="horizontal"
             app:layout_constraintGuide_percent="0.95" />
 
-
-        <Button
-            android:id="@+id/nav_to_fav_btn"
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/back_btn"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="200dp"
-            android:backgroundTint="#cfbbf0"
-            android:onClick="@{() -> viewModel.setIntent(onNavToFavorites)}"
-            android:text="@string/click_to_go_to_fav"
+            android:backgroundTint="#ccb6f4"
+            android:onClick="@{() -> viewModel.setIntent(onNavtoHome)}"
+            android:text="@string/back_to_home_screen"
+            android:textAlignment="center"
             android:textColor="@color/black"
+            app:cornerRadius="4dp"
+            app:icon="@drawable/left"
+            app:iconGravity="start"
+            app:iconSize="36dp"
+            app:iconTint="@color/black"
             app:layout_constraintEnd_toEndOf="@id/guideline_end"
-            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="@id/guideline_start"
             app:layout_constraintTop_toTopOf="@id/guideline_top" />
 
-        <Space
-            android:id="@+id/spacer"
-            android:layout_width="match_parent"
-            android:layout_height="8dp"
-            app:layout_constraintEnd_toEndOf="@id/guideline_end"
-            app:layout_constraintStart_toStartOf="@id/guideline_start"
-            app:layout_constraintTop_toBottomOf="@id/nav_to_fav_btn" />
-
-
         <include
-            layout="@layout/quote_card"
+            android:id="@+id/search_field"
+            layout="@layout/search_field"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             app:layout_constraintEnd_toEndOf="@id/guideline_end"
             app:layout_constraintStart_toStartOf="@id/guideline_start"
-            app:layout_constraintTop_toBottomOf="@id/spacer"
-            app:onAddToFavorites="@{onAddToFavorites}"
-            app:onGetNewQuote="@{onGetNewQuote}"
-            app:viewModel="@{viewModel}" />
+            app:layout_constraintTop_toBottomOf="@id/back_btn" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:adapter="@{adapter}"
+            android:orientation="vertical"
+            android:clipToPadding="false"
+            app:items="@{viewModel.favoritesState.quotes}"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintEnd_toEndOf="@id/guideline_end"
+            app:layout_constraintStart_toStartOf="@id/guideline_start"
+            app:layout_constraintTop_toBottomOf="@id/search_field"
+            tools:itemCount="3"
+            tools:listitem="@layout/fav_quote_card" />
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

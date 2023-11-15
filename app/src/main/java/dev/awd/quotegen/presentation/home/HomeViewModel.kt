@@ -5,14 +5,17 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dev.awd.quotegen.data.Result
 import dev.awd.quotegen.domain.models.QuoteModel
+import dev.awd.quotegen.domain.usecases.AddFavoriteQuoteUseCase
 import dev.awd.quotegen.domain.usecases.GetRandomQuotesUseCase
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 class HomeViewModel constructor(
-    private val getRandomQuotesUseCase: GetRandomQuotesUseCase
+    private val getRandomQuotesUseCase: GetRandomQuotesUseCase,
+    private val addFavoriteQuoteUseCase: AddFavoriteQuoteUseCase,
 ) : ViewModel() {
 
     companion object {
@@ -21,6 +24,10 @@ class HomeViewModel constructor(
 
     var homeState: MutableStateFlow<HomeState> = MutableStateFlow(HomeState())
         private set
+
+    var homeEffect: MutableSharedFlow<HomeEffect> = MutableSharedFlow()
+        private set
+
     private var quotes: MutableStateFlow<List<QuoteModel>> =
         MutableStateFlow(emptyList())
 
@@ -55,7 +62,7 @@ class HomeViewModel constructor(
     fun setIntent(intent: HomeIntent) {
         when (intent) {
             is HomeIntent.GetRandomQuote -> getRandomQuote()
-            is HomeIntent.AddToFavorites -> addToFavorites()
+            is HomeIntent.AddToFavorites -> addToFavorites(intent.quote)
             is HomeIntent.RemoveFromFavorites -> removeFromFavorites()
             is HomeIntent.OnNavToFav -> navigateToFavorites()
         }
@@ -72,15 +79,20 @@ class HomeViewModel constructor(
         }
     }
 
+    private fun addToFavorites(quote: QuoteModel) {
+        viewModelScope.launch {
+            addFavoriteQuoteUseCase(quote)
+            homeEffect.emit(HomeEffect.ShowSnackbar("Added to Favorites"))
+        }
+    }
+
     private fun navigateToFavorites() {
-        TODO("Not yet implemented")
+        viewModelScope.launch {
+            homeEffect.emit(HomeEffect.NavToFavEffect)
+        }
     }
 
     private fun removeFromFavorites() {
-        TODO("Not yet implemented")
-    }
-
-    private fun addToFavorites() {
         TODO("Not yet implemented")
     }
 }
