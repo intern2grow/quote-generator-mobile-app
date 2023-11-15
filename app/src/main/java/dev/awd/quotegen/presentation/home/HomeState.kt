@@ -6,5 +6,6 @@ data class HomeState(
 
     val quote: QuoteModel? = null,
     val loading: Boolean = true,
+    val favoriteQuotesCount: String = ""
 )
 

@@ -61,7 +61,7 @@
             app:layout_constraintGuide_percent="0.95" />
 
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/nav_to_fav_btn"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -70,10 +70,25 @@
             android:onClick="@{() -> viewModel.setIntent(onNavToFavorites)}"
             android:text="@string/click_to_go_to_fav"
             android:textColor="@color/black"
+            app:cornerRadius="4dp"
             app:layout_constraintEnd_toEndOf="@id/guideline_end"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="@id/guideline_start"
             app:layout_constraintTop_toTopOf="@id/guideline_top" />
+
+        <TextView
+            android:id="@+id/fav_count_tv"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_marginBottom="-16dp"
+            android:background="@drawable/badge_bg"
+            android:text="@{viewModel.homeState.favoriteQuotesCount}"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:layout_marginEnd="-8dp"
+            app:layout_constraintBottom_toTopOf="@id/nav_to_fav_btn"
+            app:layout_constraintEnd_toEndOf="@id/guideline_end"
+            tools:text="5" />
 
         <Space
             android:id="@+id/spacer"

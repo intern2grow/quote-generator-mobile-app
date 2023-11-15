@@ -9,4 +9,5 @@ interface QuotesRepository {
     suspend fun getFavoriteQuotes(): Flow<Result>
     suspend fun addNewQuote(quoteModel: QuoteModel)
     suspend fun deleteQuote(quoteModel: QuoteModel)
+    suspend fun getQuotesCount(): Flow<Result>
 }

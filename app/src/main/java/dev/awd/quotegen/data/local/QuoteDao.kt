@@ -18,6 +18,9 @@ interface QuoteDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(quoteEntity: QuoteEntity)
 
+    @Query("SELECT COUNT(*) FROM QUOTE ")
+    suspend fun getQuotesCount(): Int
+
     @Delete
     suspend fun delete(quoteEntity: QuoteEntity)
 

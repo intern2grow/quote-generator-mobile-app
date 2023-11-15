@@ -8,6 +8,7 @@ import dev.awd.quotegen.data.remote.QuoteApi
 import dev.awd.quotegen.data.repository.QuotesRepoImpl
 import dev.awd.quotegen.domain.repository.QuotesRepository
 import dev.awd.quotegen.domain.usecases.AddFavoriteQuoteUseCase
+import dev.awd.quotegen.domain.usecases.GetFavoriteQuotesCountUseCase
 import dev.awd.quotegen.domain.usecases.GetFavoriteQuotesUseCase
 import dev.awd.quotegen.domain.usecases.GetRandomQuotesUseCase
 import dev.awd.quotegen.domain.usecases.RemoveFavoriteQuoteUseCase
@@ -24,6 +25,7 @@ interface AppModule {
     val getFavoriteQuotesUseCase: GetFavoriteQuotesUseCase
     val addFavoriteQuoteUseCase: AddFavoriteQuoteUseCase
     val removeFavoriteQuoteUseCase: RemoveFavoriteQuoteUseCase
+    val getFavoriteQuotesCountUseCase: GetFavoriteQuotesCountUseCase
 }
 
 private const val BASE_URL = "https://api.quotable.io/"
@@ -60,6 +62,9 @@ class AppModuleImpl(
     }
     override val removeFavoriteQuoteUseCase: RemoveFavoriteQuoteUseCase by lazy {
         RemoveFavoriteQuoteUseCase(quotesRepository)
+    }
+    override val getFavoriteQuotesCountUseCase: GetFavoriteQuotesCountUseCase by lazy {
+        GetFavoriteQuotesCountUseCase(quotesRepository)
     }
 
 }

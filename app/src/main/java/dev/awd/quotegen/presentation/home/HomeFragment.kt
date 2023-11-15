@@ -1,6 +1,7 @@
 package dev.awd.quotegen.presentation.home
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -25,6 +26,7 @@ class HomeFragment : Fragment() {
                 HomeViewModel(
                     getRandomQuotesUseCase,
                     addFavoriteQuoteUseCase,
+                    getFavoriteQuotesCountUseCase
                 )
             }
         }
@@ -42,7 +44,6 @@ class HomeFragment : Fragment() {
         binding.onGetNewQuote = HomeIntent.GetRandomQuote
         binding.onNavToFavorites = HomeIntent.OnNavToFav
 
-
 //        binding.onRemoveFromFavorites = HomeIntent.RemoveFromFavorites
 
         return binding.root
@@ -53,6 +54,7 @@ class HomeFragment : Fragment() {
         viewModel.setIntent(HomeIntent.GetRandomQuote)
         lifecycleScope.launch {
             viewModel.homeState.collectLatest { homeState ->
+                Log.d(TAG, "onViewCreated: ${homeState.favoriteQuotesCount}")
                 homeState.quote?.let {
                     binding.onAddToFavorites = HomeIntent.AddToFavorites(it)
                 }
@@ -76,5 +78,9 @@ class HomeFragment : Fragment() {
 
     private fun navToFav() {
         findNavController().navigate(R.id.action_homeFragment_to_favoritesFragment)
+    }
+
+    companion object {
+        private const val TAG = "HomeFragment"
     }
 }

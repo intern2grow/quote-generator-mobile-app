@@ -56,5 +56,14 @@ class QuotesRepoImpl(
             e.printStackTrace()
         }
 
+    override suspend fun getQuotesCount() = flowOf(
+        try {
+            Result.Success(quoteDao.getQuotesCount())
+        } catch (e: Exception) {
+            e.printStackTrace()
+            Result.Failure(e.message ?: "Unknown Exception")
+        }
+    ).flowOn(Dispatchers.IO)
+
 
 }

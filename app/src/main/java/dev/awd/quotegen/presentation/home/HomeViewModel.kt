@@ -6,6 +6,7 @@ import androidx.lifecycle.viewModelScope
 import dev.awd.quotegen.data.Result
 import dev.awd.quotegen.domain.models.QuoteModel
 import dev.awd.quotegen.domain.usecases.AddFavoriteQuoteUseCase
+import dev.awd.quotegen.domain.usecases.GetFavoriteQuotesCountUseCase
 import dev.awd.quotegen.domain.usecases.GetRandomQuotesUseCase
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -16,6 +17,7 @@ import kotlinx.coroutines.launch
 class HomeViewModel constructor(
     private val getRandomQuotesUseCase: GetRandomQuotesUseCase,
     private val addFavoriteQuoteUseCase: AddFavoriteQuoteUseCase,
+    private val getFavoriteQuotesCountUseCase: GetFavoriteQuotesCountUseCase
 ) : ViewModel() {
 
     companion object {
@@ -33,6 +35,7 @@ class HomeViewModel constructor(
 
     init {
         loadAllQuotes()
+        updateFavQuotesCount()
     }
 
     private fun loadAllQuotes() {
@@ -55,6 +58,23 @@ class HomeViewModel constructor(
                         Log.e(TAG, "Can't get Quotes: ${apiResponse.error}")
                     }
                 }
+            }
+        }
+    }
+
+    private fun updateFavQuotesCount() {
+        viewModelScope.launch {
+            getFavoriteQuotesCountUseCase().collectLatest { result ->
+                when (result) {
+                    is Result.Success<*> -> {
+                        homeState.update { it.copy(favoriteQuotesCount = "${result.data}") }
+                    }
+
+                    else ->
+                        Log.e(TAG, "getFavQuotesCount: Can't get quotes count")
+                }
+
+
             }
         }
     }
@@ -83,6 +103,7 @@ class HomeViewModel constructor(
         viewModelScope.launch {
             addFavoriteQuoteUseCase(quote)
             homeEffect.emit(HomeEffect.ShowSnackbar("Added to Favorites"))
+            updateFavQuotesCount()
         }
     }
 
