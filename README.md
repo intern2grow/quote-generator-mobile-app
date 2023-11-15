@@ -1,20 +1,31 @@
-# quote-generator-mobile-app
+# Quote Generator
 
-Hello there, your task is to convert the following figma design into a mobile app:
+ Android application built using Kotlin as a task from [Intern2Grow](https://intern2grow.vercel.app/)
 
-https://www.figma.com/file/RU5SIqb4oqRpowA56hUB9O/quote-generator-screens?type=design&node-id=0%3A1&mode=design&t=x9pgdqsV75TKlwRp-1
 
-Then use the following api to get random quotes in home screen and get quotes by id in favorite quotes screen:
 
-https://github.com/lukePeavey/quotable
 
-So make sure that you have covered all the following tasks:
+https://github.com/mahmoodawd/quote-generator/assets/63718329/31e33ec7-130e-47ed-afd0-7890aa84ba3f
 
-- design home and favorite quotes screens.
-- implement navigation between screens.
-- implement generate quote, add to favorite, remove from favorite and search functionalities.
-- store IDs of favorite quotes locally on user device.
 
-That's all, fork the repository and start working on it.
 
-Best of luck.
+
+
+## Features
+- Get a random quote on app launch or by triggering it manually with the help of [Quotable API](https://github.com/lukePeavey/quotable)
+- Add quotes to favorites to explore it in offline mode.
+- Search within the quotes.
+
+## Libraries and Technologies
+
+### ViewBinding & Databinding
+### Manual Dependency Injection
+### Navigation Component
+### Retrofit for Networking
+### Room For Persistence storage 
+### Coroutines for asynchronous tasks
+
+
+## Contact
+
+For any inquiries or questions, you can reach me at [<img align="center" src="https://img.shields.io/badge/gmail-%23FF0000?style=plastic&logo=gmail&logoColor=white"/>](mailto:mahmooodawd@gmail.com).
