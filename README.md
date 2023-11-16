@@ -18,6 +18,8 @@ https://github.com/mahmoodawd/quote-generator/assets/63718329/31e33ec7-130e-47ed
 
 ## Libraries and Technologies
 
+### MVI Architectural design pattern
+### Android Clean Architecture (Domain, data, and presentation)
 ### ViewBinding & Databinding
 ### Manual Dependency Injection
 ### Navigation Component
