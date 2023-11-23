@@ -1,0 +1,11 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+
+    <style name="Theme.QuoteGen" parent="Theme.Material3.DayNight.NoActionBar">
+        <item name="android:fontFamily">@font/gemunu_libre_regular</item>
+        <item name="android:fontWeight" tools:targetApi="o">400</item>
+        <item name="android:textSize">26sp</item>
+
+    </style>
+
+</resources>

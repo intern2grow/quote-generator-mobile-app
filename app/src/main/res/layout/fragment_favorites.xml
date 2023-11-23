@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".presentation.favorites.FavoritesFragment">
+
+    <data>
+
+        <variable
+            name="adapter"
+            type="dev.awd.quotegen.presentation.favorites.FavoritesAdapter" />
+
+        <variable
+            name="viewModel"
+            type="dev.awd.quotegen.presentation.favorites.FavoritesViewModel" />
+
+        <variable
+            name="onGetFavorites"
+            type="dev.awd.quotegen.presentation.favorites.FavoritesIntent.GetFavoritesQuotes" />
+
+
+        <variable
+            name="onRemoveFromFavorites"
+            type="dev.awd.quotegen.presentation.favorites.FavoritesIntent.RemoveFromFavorites" />
+
+        <variable
+            name="onNavtoHome"
+            type="dev.awd.quotegen.presentation.favorites.FavoritesIntent.OnNavToHome" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/gradient_background">
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline_start"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.05" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline_end"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.95" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline_top"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.02" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline_bottom"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.95" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/back_btn"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#ccb6f4"
+            android:onClick="@{() -> viewModel.setIntent(onNavtoHome)}"
+            android:text="@string/back_to_home_screen"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            app:cornerRadius="4dp"
+            app:icon="@drawable/left"
+            app:iconGravity="start"
+            app:iconSize="36dp"
+            app:iconTint="@color/black"
+            app:layout_constraintEnd_toEndOf="@id/guideline_end"
+            app:layout_constraintStart_toStartOf="@id/guideline_start"
+            app:layout_constraintTop_toTopOf="@id/guideline_top" />
+
+        <include
+            android:id="@+id/search_field"
+            layout="@layout/search_field"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="@id/guideline_end"
+            app:layout_constraintStart_toStartOf="@id/guideline_start"
+            app:layout_constraintTop_toBottomOf="@id/back_btn" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:paddingBottom="132dp"
+            android:adapter="@{adapter}"
+            android:orientation="vertical"
+            app:items="@{viewModel.favoritesState.quotes}"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintEnd_toEndOf="@id/guideline_end"
+            app:layout_constraintStart_toStartOf="@id/guideline_start"
+            app:layout_constraintTop_toBottomOf="@id/search_field"
+            tools:itemCount="3"
+            tools:listitem="@layout/fav_quote_card" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
